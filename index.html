@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-AO" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#F6F7F4" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Seu Carrinho" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta
+      name="description"
+      content="Seu Carrinho — aplicativo de compras de demonstração, criado pela Bug Shop."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <title>Seu Carrinho</title>
+    <script>
+      // Aplica o tema antes do primeiro desenho, para evitar um "flash" branco no modo escuro.
+      (function () {
+        try {
+          var mode = localStorage.getItem('sc:theme') || 'system';
+          var dark =
+            mode === 'dark' ||
+            (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      html, body { background: #F6F7F4; }
+      html[data-theme='dark'], html[data-theme='dark'] body { background: #0E1110; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

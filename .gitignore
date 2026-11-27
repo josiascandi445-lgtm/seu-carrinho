@@ -1,0 +1,27 @@
+node_modules
+dist
+.env
+.env.*
+!.env.example
+*.local
+.DS_Store
+npm-debug.log*
+
+# Pastas nativas geradas pelo Capacitor: decide se queres versioná-las (recomendado após a primeira configuração)
+# android/
+# ios/
+
+# Nunca versionar credenciais
+serviceAccount*.json
+*-adminsdk-*.json
+
+# Credenciais de assinatura (NUNCA versionar)
+*.keystore
+*.jks
+*.p12
+*.p8
+*.cer
+*.mobileprovision
+keystore-secrets.txt
+*.base64
+*.base64.txt

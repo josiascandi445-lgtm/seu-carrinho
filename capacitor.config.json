@@ -1,0 +1,29 @@
+{
+  "appId": "com.bugshop.seucarrinho",
+  "appName": "Seu Carrinho",
+  "webDir": "dist",
+  "backgroundColor": "#F6F7F4",
+  "android": {
+    "allowMixedContent": false
+  },
+  "ios": {
+    "contentInset": "never",
+    "scrollEnabled": false
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "launchFadeOutDuration": 200,
+      "backgroundColor": "#F6F7F4",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false
+    },
+    "Keyboard": {
+      "resize": "body",
+      "resizeOnFullScreen": true
+    },
+    "SystemBars": {
+      "insetsHandling": "css"
+    }
+  }
+}
