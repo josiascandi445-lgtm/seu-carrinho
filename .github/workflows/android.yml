@@ -1,0 +1,173 @@
+name: Android (APK / AAB)
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+    paths-ignore: ['**/*.md', 'docs/**']
+  workflow_dispatch:
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write # só é usado para publicar em Releases quando crias uma tag v*
+    env:
+      # Configuração PÚBLICA do Firebase (GitHub > Settings > Secrets and variables > Actions > Variables)
+      VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
+      VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
+      VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
+      VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
+      VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+      VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
+      VITE_ENABLE_STORAGE: ${{ vars.VITE_ENABLE_STORAGE }}
+      VITE_ENABLE_FUNCTIONS: ${{ vars.VITE_ENABLE_FUNCTIONS }}
+      VITE_SHOW_DESIGN_SYSTEM: ${{ vars.VITE_SHOW_DESIGN_SYSTEM }}
+      # Assinatura (opcional). Sem estes segredos gera-se só o APK de debug.
+      HAS_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' && secrets.ANDROID_KEYSTORE_PASSWORD != '' && secrets.ANDROID_KEY_ALIAS != '' && secrets.ANDROID_KEY_PASSWORD != '' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Cache do npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('package.json', 'package-lock.json') }}
+          restore-keys: npm-${{ runner.os }}-
+
+      - name: Instalar dependências
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      - name: Build web (React + Vite)
+        run: npm run build
+
+      - name: Preparar projeto Android (cap add / assets / sync)
+        run: bash scripts/ci/prepare-native.sh android
+
+      - name: Definir versão
+        id: meta
+        env:
+          OFFSET: ${{ vars.ANDROID_VERSION_CODE_OFFSET || 0 }}
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          BUILD=$(( GITHUB_RUN_NUMBER + OFFSET ))
+          bash scripts/ci/android-version.sh "$BUILD" "$VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "build=$BUILD" >> "$GITHUB_OUTPUT"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # Mantém a mesma chave de debug entre builds, para o APK de debug poder ser instalado por cima do anterior.
+      - name: Restaurar chave de debug
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: android-debug-keystore-v1
+
+      - name: Compilar APK de debug
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleDebug
+
+      - name: Verificar que a interface está dentro do APK
+        run: |
+          APK="$(find android/app/build/outputs/apk/debug -name '*.apk' | head -n1)"
+          unzip -l "$APK" | grep -q 'assets/public/index.html' \
+            || { echo "::error::index.html não está dentro do APK"; exit 1; }
+          mkdir -p out
+          cp "$APK" "out/SeuCarrinho-${{ steps.meta.outputs.version }}-b${{ steps.meta.outputs.build }}-debug.apk"
+
+      - name: Compilar e assinar APK + AAB de release
+        if: env.HAS_KEYSTORE == 'true'
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          OUT_NAME: SeuCarrinho-${{ steps.meta.outputs.version }}-b${{ steps.meta.outputs.build }}-release
+        run: |
+          set -euo pipefail
+          KS="$RUNNER_TEMP/release.keystore"
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$KS"
+
+          (cd android && ./gradlew --no-daemon assembleRelease bundleRelease)
+
+          BT="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -n1)"
+          UNSIGNED="$(find android/app/build/outputs/apk/release -name '*.apk' | head -n1)"
+          "$BT/zipalign" -p -f 4 "$UNSIGNED" "$RUNNER_TEMP/aligned.apk"
+          "$BT/apksigner" sign --ks "$KS" --ks-key-alias "$ANDROID_KEY_ALIAS" \
+            --ks-pass env:ANDROID_KEYSTORE_PASSWORD --key-pass env:ANDROID_KEY_PASSWORD \
+            --out "out/$OUT_NAME.apk" "$RUNNER_TEMP/aligned.apk"
+          "$BT/apksigner" verify --print-certs "out/$OUT_NAME.apk" | head -n 3
+
+          AAB="$(find android/app/build/outputs/bundle/release -name '*.aab' | head -n1)"
+          cp "$AAB" "out/$OUT_NAME.aab"
+          jarsigner -sigalg SHA256withRSA -digestalg SHA-256 -keystore "$KS" \
+            -storepass:env ANDROID_KEYSTORE_PASSWORD -keypass:env ANDROID_KEY_PASSWORD \
+            "out/$OUT_NAME.aab" "$ANDROID_KEY_ALIAS"
+          jarsigner -verify "out/$OUT_NAME.aab" | tail -n 1
+          rm -f "$KS"
+
+      - name: Guardar APK de debug (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: seu-carrinho-android-debug-apk
+          path: out/*-debug.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Guardar APK de release assinado (artifact)
+        if: env.HAS_KEYSTORE == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: seu-carrinho-android-release-apk
+          path: out/*-release.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Guardar AAB de release assinado (artifact)
+        if: env.HAS_KEYSTORE == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: seu-carrinho-android-release-aab
+          path: out/*-release.aab
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publicar em Releases (apenas tags v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*
+
+      - name: Resumo
+        if: always()
+        run: |
+          {
+            echo "### Seu Carrinho — Android"
+            echo ""
+            echo "- Versão: ${{ steps.meta.outputs.version }} (build ${{ steps.meta.outputs.build }})"
+            if [ "$HAS_KEYSTORE" = "true" ]; then
+              echo "- Assinatura: **release assinado** (APK + AAB nos artifacts)"
+            else
+              echo "- Assinatura: **apenas debug** (sem keystore configurada; ver docs/DISTRIBUICAO.md)"
+            fi
+            echo "- Download: secção **Artifacts**, no fundo desta página."
+          } >> "$GITHUB_STEP_SUMMARY"
