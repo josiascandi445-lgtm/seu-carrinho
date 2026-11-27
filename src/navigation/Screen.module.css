@@ -1,0 +1,48 @@
+.screen {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--bg);
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.noHeader {
+  padding-top: var(--sat);
+}
+
+.content {
+  min-height: 100%;
+  padding: 8px calc(16px + var(--sar)) calc(24px + var(--sab)) calc(16px + var(--sal));
+}
+
+.screen[data-tabbar='true'] .content {
+  padding-bottom: var(--tabbar-space);
+}
+
+.fixed {
+  flex: 1;
+  min-height: 0;
+}
+
+.footer {
+  flex: none;
+  padding: 12px calc(16px + var(--sar)) calc(12px + var(--sab)) calc(16px + var(--sal));
+  background: var(--surface);
+  border-radius: var(--r-l) var(--r-l) 0 0;
+  box-shadow: 0 -8px 24px -12px rgba(20, 24, 26, 0.2);
+}

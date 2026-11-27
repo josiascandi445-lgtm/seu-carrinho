@@ -1,0 +1,49 @@
+.header {
+  flex: none;
+  display: grid;
+  grid-template-columns: minmax(44px, 1fr) minmax(0, auto) minmax(44px, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-height: calc(var(--sat) + 60px);
+  padding: calc(var(--sat) + 8px) calc(16px + var(--sar)) 8px calc(16px + var(--sal));
+  background: var(--bg);
+  border-bottom: 1px solid transparent;
+  transition: border-color 160ms;
+}
+
+:global([data-scrolled='true']) > .header {
+  border-bottom-color: var(--line);
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.end {
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.center {
+  min-width: 0;
+  text-align: center;
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--text-2);
+}

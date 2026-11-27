@@ -1,0 +1,14 @@
+.section { margin-top: 28px; }
+.heading { margin-bottom: 12px; font-size: 18px; font-weight: 700; letter-spacing: -0.015em; }
+.note { color: var(--text-2); font-size: 14px; }
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 12px; }
+.rowBetween { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; font-size: 15px; }
+.rowEnd { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 14px; }
+.scroller { display: flex; gap: 10px; margin: 0 -16px 14px; padding: 0 16px; overflow-x: auto; scrollbar-width: none; }
+.scroller::-webkit-scrollbar { display: none; }
+.swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.swatch { display: flex; flex-direction: column; gap: 6px; }
+.swatch span { height: 48px; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--line); }
+.swatch small { font-size: 12px; color: var(--text-2); }

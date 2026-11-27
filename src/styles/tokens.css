@@ -1,0 +1,84 @@
+/* ============================================================
+   Tokens de design — Seu Carrinho
+   Cor principal: verde-lima. Neutros ligeiramente esverdeados.
+   ============================================================ */
+:root {
+  --font: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Paleta base */
+  --lime-100: #e9f3cc;
+  --lime-500: #a3cf3b;
+  --lime-600: #8db82a;
+  --lime-700: #6e9220;
+
+  /* Semânticos (tema claro) */
+  --stage: #e4e7e0; /* fundo fora da "janela" do app, só em ecrãs largos */
+  --bg: #f6f7f4;
+  --surface: #ffffff;
+  --surface-2: #eceee9;
+  --line: #e1e4dc;
+  --text: #14181a;
+  --text-2: #5a6157;
+  --text-3: #858b81;
+
+  --accent: var(--lime-500);
+  --accent-press: var(--lime-600);
+  --accent-soft: var(--lime-100);
+  --on-accent: #14181a;
+
+  --ink: #14181a;
+  --on-ink: #ffffff;
+
+  --danger: #d1453b;
+  --danger-soft: #fbe8e6;
+  --success: #2c9a58;
+  --star: #f2a900;
+
+  --shadow-float: 0 12px 28px -10px rgba(20, 24, 26, 0.28), 0 2px 6px rgba(20, 24, 26, 0.06);
+  --shadow-sheet: 0 -10px 40px -12px rgba(20, 24, 26, 0.3);
+
+  /* Raios: escala com intenção (controlos < cartões < painéis) */
+  --r-xs: 8px;
+  --r-s: 12px;
+  --r-m: 16px;
+  --r-l: 22px;
+  --r-pill: 999px;
+
+  /* Movimento */
+  --ease-out: cubic-bezier(0.22, 0.8, 0.26, 1);
+  --ease-in: cubic-bezier(0.4, 0, 0.8, 0.4);
+  --dur-screen: 300ms;
+
+  /* Áreas seguras: variáveis do Capacitor (Android) com fallback para env() (iOS/web) */
+  --sat: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --sab: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  --sal: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+  --sar: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+
+  /* Navegação inferior */
+  --tabbar-h: 64px;
+  --tabbar-gap: 12px;
+  --tabbar-space: calc(var(--tabbar-h) + var(--tabbar-gap) + var(--sab) + 20px);
+
+  --keyboard-height: 0px;
+}
+
+[data-theme='dark'] {
+  --stage: #070908;
+  --bg: #0e1110;
+  --surface: #171b19;
+  --surface-2: #212623;
+  --line: #2a302c;
+  --text: #f1f3ee;
+  --text-2: #a5ada1;
+  --text-3: #7a8277;
+
+  --accent-soft: #28331a;
+  --danger-soft: #3a1f1d;
+
+  --ink: #f1f3ee;
+  --on-ink: #14181a;
+
+  --shadow-float: 0 12px 28px -10px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-sheet: 0 -10px 40px -12px rgba(0, 0, 0, 0.8);
+}

@@ -1,0 +1,52 @@
+.wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stars {
+  position: relative;
+  display: inline-block;
+}
+
+.row {
+  display: inline-flex;
+  gap: 2px;
+  width: max-content;
+}
+
+.track {
+  position: relative;
+  display: block;
+  color: var(--line);
+}
+
+.fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
+  color: var(--star);
+}
+
+.value {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.count {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.pick {
+  display: flex;
+  padding: 4px;
+  color: var(--line);
+}
+
+.picked {
+  color: var(--star);
+}

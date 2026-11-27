@@ -1,0 +1,41 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  background: var(--surface);
+  border-radius: var(--r-m);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.who {
+  min-width: 0;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.hint {
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+/* Linhas dentro da folha: fundo ligeiramente diferente da folha */
+.options {
+  --surface: var(--bg);
+  margin-top: -20px;
+}

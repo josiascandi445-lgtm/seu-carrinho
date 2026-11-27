@@ -1,0 +1,35 @@
+.wrap {
+  position: absolute;
+  top: calc(var(--sat) + 10px);
+  left: 16px;
+  right: 16px;
+  z-index: 80;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  box-shadow: var(--shadow-float);
+  pointer-events: auto;
+  animation: toastIn 260ms var(--ease-out) both;
+}
+
+.closing {
+  animation: toastOut 200ms ease-in both;
+}
+
+.icon { flex: none; }
+.success .icon { color: var(--lime-500); }
+.error .icon { color: #ff8a80; }

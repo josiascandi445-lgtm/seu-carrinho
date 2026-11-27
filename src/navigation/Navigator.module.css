@@ -1,0 +1,53 @@
+.root {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.layer[data-active='true'] {
+  visibility: inherit;
+  pointer-events: auto;
+  animation: tabFade 180ms ease-out;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.frame[data-visible='false'] {
+  visibility: hidden;
+}
+
+.frame[data-anim='push-in'] {
+  z-index: 3;
+  box-shadow: -12px 0 32px -14px rgba(0, 0, 0, 0.35);
+  animation: pushIn var(--dur-screen) var(--ease-out) both;
+}
+
+.frame[data-anim='push-under'] {
+  z-index: 1;
+  animation: pushUnder var(--dur-screen) var(--ease-out) both;
+}
+
+.frame[data-anim='pop-out'] {
+  z-index: 3;
+  box-shadow: -12px 0 32px -14px rgba(0, 0, 0, 0.35);
+  animation: popOut var(--dur-screen) var(--ease-out) both;
+}
+
+.frame[data-anim='pop-reveal'] {
+  z-index: 1;
+  animation: popReveal var(--dur-screen) var(--ease-out) both;
+}
