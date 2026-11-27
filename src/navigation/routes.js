@@ -14,5 +14,7 @@ export const routes = {
   cart: { component: CartPage, tabBar: true },
   profile: { component: ProfilePage, tabBar: true },
 
+  editProfile: { component: lazy(() => import('../pages/EditProfilePage')), tabBar: false },
+  onboarding: { component: lazy(() => import('../pages/onboarding/OnboardingRoute')), tabBar: false },
   designSystem: { component: lazy(() => import('../pages/dev/DesignSystemPage')), tabBar: false },
 };

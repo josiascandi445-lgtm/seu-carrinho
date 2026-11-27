@@ -45,6 +45,10 @@
   appearance: none;
 }
 
+.input:focus-visible {
+  outline: none;
+}
+
 .input::placeholder {
   color: var(--text-3);
 }

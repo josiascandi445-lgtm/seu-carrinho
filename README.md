@@ -3,7 +3,8 @@
 Aplicativo mobile de compras (React + Vite + Capacitor + Firebase), criado pela **Bug Shop** como demonstração comercial.
 Moeda: Kz · Idioma: Português · Identidade: verde-lima, branco suave, carvão.
 
-> **Estado: etapa 1 de 6 (base do aplicativo).** Ainda não há autenticação, produtos reais, carrinho nem painel admin.
+> **Estado: etapa 2 de 6 (arranque e autenticação).** Splash, introdução, login, registo, recuperação de palavra-passe e perfil já funcionam.
+> Produtos reais, carrinho, checkout e painel admin chegam nas próximas etapas.
 > Ver `docs/ARQUITETURA.md` para decisões e limitações.
 
 ## Requisitos
@@ -40,6 +41,8 @@ e o Cloudflare Pages publica a versão web. Guia completo, variáveis, assinatur
 
 ## Configuração
 
+Firebase: ver **`docs/FIREBASE.md`** (ativar o login, publicar `firestore.rules`, variáveis).
+
 Copia `.env.example` para `.env.local`. As variáveis `VITE_FIREBASE_*` são a configuração **pública** do Firebase.
 Nunca coloques service accounts nem chaves privadas no repositório (o `.gitignore` já bloqueia os padrões comuns).
 
@@ -52,11 +55,11 @@ src/
   admin/        área administrativa (etapa 5), separada da área do cliente
   components/   componentes reutilizáveis (um por pasta: .jsx + .module.css)
   config/       identidade da app e interruptores de funcionalidades (Spark/Blaze)
-  contexts/     tema e notificações curtas (toasts)
+  contexts/     tema, notificações curtas (toasts) e autenticação
   firebase/     configuração e inicialização preguiçosa do Firebase
   hooks/        hooks (teclado)
   navigation/   navegação própria por separadores e pilhas, transições, Screen
-  pages/        ecrãs da área do cliente (+ dev/ biblioteca de componentes)
+  pages/        ecrãs da área do cliente (auth/, onboarding/, dev/ biblioteca de componentes)
   services/     Capacitor (barras do sistema, splash, voltar), tátil, proteções mobile
   styles/       tokens de design, base, animações
   utils/        formatação (Kz) e utilitários

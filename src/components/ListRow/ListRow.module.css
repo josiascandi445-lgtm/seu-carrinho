@@ -77,3 +77,8 @@
   font-size: 12px;
   font-weight: 600;
 }
+
+.danger .icon,
+.danger .label {
+  color: var(--danger);
+}

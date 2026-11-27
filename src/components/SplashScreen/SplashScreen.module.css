@@ -1,0 +1,55 @@
+.splash {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+}
+
+.center {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.halo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 96px;
+  height: 96px;
+  margin-left: -48px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  animation: halo 1100ms var(--ease-out) 150ms both;
+}
+
+.mark {
+  position: relative;
+  animation: logoIn 620ms var(--ease-out) both;
+}
+
+.name {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  animation: rise 520ms var(--ease-out) 380ms both;
+}
+
+.by {
+  position: absolute;
+  bottom: calc(var(--sab) + 28px);
+  font-size: 13px;
+  color: var(--text-2);
+  animation: rise 520ms var(--ease-out) 700ms both;
+}
+
+@keyframes halo {
+  from { opacity: 0.9; transform: scale(0.8); }
+  to { opacity: 0; transform: scale(3.2); }
+}

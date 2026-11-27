@@ -1,0 +1,19 @@
+.photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 4px;
+}
+
+.photoActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.remove {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--danger);
+}

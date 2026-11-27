@@ -1,0 +1,105 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: rise 360ms var(--ease-out) both;
+}
+
+.link {
+  align-self: flex-end;
+  margin-top: -6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-press);
+  text-underline-offset: 3px;
+}
+
+.banner {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.error {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.info {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.banner svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.switch {
+  margin-top: 4px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-2);
+}
+
+.switch button {
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-press);
+  text-underline-offset: 3px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  padding-top: 8px;
+  animation: rise 360ms var(--ease-out) both;
+}
+
+.doneIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 24px;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.done h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.done p {
+  color: var(--text-2);
+  max-width: 300px;
+}

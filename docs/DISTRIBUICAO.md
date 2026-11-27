@@ -79,7 +79,8 @@ pública por desenho (a segurança está nas regras do Firestore), por isso são
 | `IOS_PROVISIONING_PROFILE_BASE64` | Perfil de aprovisionamento (.mobileprovision) em base64 |
 
 Se uma variável não existir, a app usa o valor por defeito (Spark, sem Storage/Functions). Sem as
-variáveis `VITE_FIREBASE_*`, o Firebase simplesmente não é inicializado.
+variáveis `VITE_FIREBASE_*`, o Firebase não é inicializado e a app só permite explorar sem conta.
+Configuração passo a passo do Firebase: `docs/FIREBASE.md`.
 Nunca coloques *service accounts*, chaves de admin ou `.env` no repositório (o `.gitignore` bloqueia os padrões comuns).
 
 ## 4. Assinar o Android (APK/AAB para distribuição)

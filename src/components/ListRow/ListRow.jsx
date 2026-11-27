@@ -14,13 +14,13 @@ export function ListGroup({ title, children }) {
 }
 
 // Linha de definição. Sem onPress ou com unavailable=true fica claramente identificada como indisponível.
-export function ListRow({ icon: Icon, label, value, onPress, unavailable = false, trailing, selected = false }) {
+export function ListRow({ icon: Icon, label, value, onPress, unavailable = false, trailing, selected = false, danger = false }) {
   const disabled = unavailable || !onPress;
   return (
     <li className={styles.item}>
       <button
         type="button"
-        className={cx(styles.row, disabled && styles.disabled)}
+        className={cx(styles.row, disabled && styles.disabled, danger && styles.danger)}
         disabled={disabled}
         aria-current={selected || undefined}
         onClick={() => {

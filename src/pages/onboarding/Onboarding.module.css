@@ -1,0 +1,107 @@
+.root {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  animation: tabFade 260ms ease-out;
+}
+
+.top {
+  flex: none;
+  display: flex;
+  justify-content: flex-end;
+  padding: calc(var(--sat) + 12px) calc(20px + var(--sar)) 0 calc(20px + var(--sal));
+}
+
+.skip {
+  min-width: 64px;
+  height: 40px;
+  padding: 0 4px;
+  text-align: right;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.track {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+.art {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy {
+  flex: none;
+  padding: 8px 28px 20px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.text {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.footer {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 4px calc(24px + var(--sar)) calc(24px + var(--sab)) calc(24px + var(--sal));
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+  padding-left: 4px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--line);
+  transition: width 260ms var(--ease-out), background-color 260ms;
+}
+
+.dotActive {
+  width: 28px;
+  background: var(--accent-press);
+}
+
+@media (max-height: 640px) {
+  .art { transform: scale(0.8); }
+  .title { font-size: 26px; }
+}

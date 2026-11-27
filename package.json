@@ -1,7 +1,7 @@
 {
   "name": "seu-carrinho",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "Seu Carrinho — aplicativo mobile de compras (demonstração comercial Bug Shop)",
   "engines": {
@@ -26,6 +26,7 @@
     "@capacitor/haptics": "^8.0.0",
     "@capacitor/ios": "^8.4.0",
     "@capacitor/keyboard": "^8.0.0",
+    "@capacitor/preferences": "^8.0.0",
     "@capacitor/splash-screen": "^8.0.0",
     "@fontsource-variable/inter": "^5.2.0",
     "firebase": "^12.0.0",

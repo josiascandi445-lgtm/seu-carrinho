@@ -1,0 +1,90 @@
+.layout {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--accent);
+  animation: tabFade 260ms ease-out;
+}
+
+.hero {
+  position: relative;
+  flex: none;
+  overflow: hidden;
+  min-height: calc(var(--sat) + 190px);
+  padding: calc(var(--sat) + 16px) calc(28px + var(--sar)) 52px calc(28px + var(--sal));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: var(--on-accent);
+}
+
+.hasBack {
+  padding-top: calc(var(--sat) + 72px);
+}
+
+.ring {
+  position: absolute;
+  top: calc(var(--sat) - 40px);
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 34px solid rgba(20, 24, 26, 0.07);
+}
+
+.dot {
+  position: absolute;
+  top: calc(var(--sat) + 70px);
+  right: 96px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(20, 24, 26, 0.16);
+}
+
+.back {
+  position: absolute;
+  top: calc(var(--sat) + 12px);
+  left: calc(16px + var(--sal));
+}
+
+.title {
+  position: relative;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.subtitle {
+  position: relative;
+  margin-top: 8px;
+  font-size: 16px;
+  opacity: 0.72;
+}
+
+.panel {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin-top: -30px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border-radius: 32px 32px 0 0;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+  padding: 28px calc(24px + var(--sar)) calc(28px + var(--sab)) calc(24px + var(--sal));
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}

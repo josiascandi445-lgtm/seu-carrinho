@@ -1,4 +1,4 @@
-# Arquitetura — etapa 1
+# Arquitetura — etapas 1 e 2
 
 ## Roteiro
 1. **Base** (esta etapa): estrutura, tema, componentes, navegação, comportamento mobile, Capacitor.
@@ -7,6 +7,18 @@
 4. Carrinho persistente, checkout demonstrativo, pedidos, notificações, avaliações.
 5. Painel administrativo.
 6. Regras de segurança, Functions (preparadas), documentação final, guia Android/iOS.
+
+## Arranque e autenticação (etapa 2)
+`App.jsx` decide a fase a mostrar: splash animado (mín. 1,6 s) → introdução (só na 1.ª vez; repetível em Perfil → *Ver introdução*)
+→ autenticação → conclusão de perfil → aplicação. A sessão é restaurada pelo Firebase (IndexedDB), por isso a app abre logo na conta.
+- **Autenticação:** Firebase Auth (email/palavra-passe), mensagens de erro em português, validação de email e palavra-passe
+  (mín. 8, letras e números), mostrar/ocultar palavra-passe, loading e recuperação por email (não revela se o email existe).
+- **Perfil:** documento `users/{uid}` no Firestore (nome obrigatório; foto e telefone opcionais). A foto é recortada e reduzida
+  no dispositivo e guardada no documento, para funcionar no plano Spark (sem Storage).
+- **Visitante:** "Explorar sem conta" permite ver a app sem iniciar sessão (estado guardado no dispositivo). Funcionalidades que
+  precisem de conta (pedidos, avaliações) pedirão login nas etapas seguintes.
+- **Segurança:** as regras do Firestore (`firestore.rules`) impedem alterar `role`, `uid` e `email` e fecham todas as outras coleções.
+  O papel de administrador nunca é decidido no frontend.
 
 ## Navegação
 Sem react-router nem histórico do navegador. Cinco separadores, cada um com a sua pilha de ecrãs
@@ -45,5 +57,7 @@ A interface é sempre empacotada dentro da app (sem `server.url`).
   Capacitor e os ícones simulados. Falta testar `npm run build`, o Capacitor e a app num telemóvel real.
 - Pastas `android/` e `ios/` ainda não existem (criam-se com `cap add`).
 - Cor dos ícones da barra de estado (`SystemBars.setStyle`) e comportamento do teclado precisam de confirmação em dispositivo.
-- Ainda sem autenticação, dados do Firestore, carrinho, checkout, avaliações ou admin.
+- Ainda sem produtos no Firestore, carrinho, checkout, avaliações ou admin.
+- Autenticação e perfil foram testados no browser contra um Firebase **simulado**; falta testar com o projeto Firebase real e num telemóvel.
+- Sem verificação de email nem início de sessão com Google/Apple (não pedidos).
 - iOS só compila num Mac com Xcode; nada foi testado em iOS.

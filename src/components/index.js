@@ -19,3 +19,5 @@ export { CategoryCard } from './CategoryCard/CategoryCard';
 export { ProductGallery } from './ProductGallery/ProductGallery';
 export { CartItem } from './CartItem/CartItem';
 export { BottomNavigation } from './BottomNavigation/BottomNavigation';
+export { Avatar } from './Avatar/Avatar';
+export { SplashScreen } from './SplashScreen/SplashScreen';
